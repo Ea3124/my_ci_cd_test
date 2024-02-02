@@ -61,9 +61,9 @@ jobs:
       
       - name: AWS codeDeploy 서비스에 절차에 따라 배포 시작
         run:  aws deploy create-deployment 
-           -application-name pusan-code-deploy
+           --application-name pusan-code-deploy
            --deployment-config-name CodeDeployDefault.OneAtATime
            --deployment-group-name dev
-           --s3-location bucket=pusan092-deploy-bucket,bundleType=zip,key=deploy/app.zip
+           --s3-location bucket=pusan092-deploy-bucket,bundleType=zip,key=app.zip
 
   
