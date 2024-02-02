@@ -1,0 +1,50 @@
+# 공식 문서 https://docs.github.com/ko/actions
+name:   deploy
+
+# 언제 gitaction이 발동이 걸리는가? 트리거
+on: 
+    push:
+        branches:   [main]
+
+# 실제로 할 일 jobs
+jobs:
+    build:
+        runs-on: ubuntu-20.04
+        # gitaction 수행을 위한 운영체계 설정(가상 인스턴스) 지정
+        # 18.04 (X)
+        strategy:
+            matrix:
+                node-version: [21.6.1]
+                # https:// nodejs.org.en/about/releases
+                # 사용 버전 명시
+
+    steps:
+        -   name:   Checkout Source Code, 소스코드를 내려받는다
+            uses:   actions/checkout@v3
+
+        -   name:   Use Nodejs ${{matrix.node.version}}, 노드설치 
+            uses:   actions/setup-node@v3
+            with:
+                node-version: ${{matrix.node.version}}
+
+        -   name:   npm 체크
+            run:    npm -v
+
+        -   name:   환경변수 파일 생성, gitaction에서 보안으로 저장한 값을 불러서 코드에서 사용토록 처리
+            working-directory:  ./
+            run:    |
+                pwd
+                touch   .env
+                ehco PORT=${{secrets.PORT}} >> .env:
+                cat .env
+
+        -   name: 패키지 설치 package install
+            working-directory:  ./
+            run:    yarn
+
+        -   name: build(babel->표준js, webpack->압축:프런트), jest(단위테스트) 등등 계속 추가 가능
+            working-directory:  ./
+            run:    yarn run build
+
+
+        
