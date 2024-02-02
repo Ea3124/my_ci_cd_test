@@ -121,16 +121,20 @@ ci/cd 테스트
         - sudo ./install auto
         - sudo service codedeploy-agent status
             - active (running) : 에이전트 작동중
-    - EC2 서버가 재가동했을때 자동으로 에이전트 가동되게 설정(옵션)
+    - ec2 서버가 재가동했을때 자동으로 에이전트 가동되게 설정 (옵션)
         - sudo nano /etc/init.d/codedeploy-startup.sh
             - 편집
             ```
             #!/bin
             sudo service codedeploy-agent restart
             ```
-
-            - 저장 후 nano 종료 ()
-            - sudp chmod+ㅌ
+            - 저장 후 nano 종료 (ctrl + x, y, 엔터) 
+        - sudo chmod +x /etc/init.d/codedeploy-startup.sh
 
 # CD-소스파일
-    - 
+    - appspec.yml 파일 생성(루트)
+        - codeDeploy 배포하는 애플리케이션에 대한 사양정리
+
+
+IAM 사용자 삭제
+s3 버킷 비우기 후 all 삭제
