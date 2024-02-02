@@ -140,9 +140,16 @@ IAM 사용자 삭제
 s3 버킷 비우기 후 all 삭제
 
 
-      - name: AWS codeDeploy 서비스에 절차에 따라 배포 시작
-        run:  aws deploy create-deployment 
-           --application-name pusan-code-deploy
-           --deployment-config-name CodeDeployDefault.OneAtATime
-           --deployment-group-name dev
-           --s3-location bucket=pusan092-deploy-bucket,bundleType=zip,key=deploy/app.zip
+- name: Deploy with AWS codedeploy
+  run: aws deploy create-deployment
+    -application-name {application_name}
+    --deployment-config-name CodeDeployDefault.OneAtATime
+    --deployment-group-name {deploy_group}
+    --s3-location bucket={bucket_name},bundleType=zip,key={file_name}
+
+- name: AWS codeDeploy 서비스에 절차에 따라 배포 시작
+run:  aws deploy create-deployment 
+    --application-name pusan-code-deploy
+    --deployment-config-name CodeDeployDefault.OneAtATime
+    --deployment-group-name dev
+    --s3-location bucket=pusan092-deploy-bucket,bundleType=zip,key=deploy/app.zip
